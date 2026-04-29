@@ -1,0 +1,4 @@
+public/
+.hugo_cache/
+resources/_gen/
+.DS_Store

@@ -1,0 +1,38 @@
+{{ define "main" }}
+  <div class="ed-container" style="max-width: 860px; padding-top: 5rem; padding-bottom: 4rem;">
+
+    <div class="ed-page-header ed-animate-fade-up">
+      <h1 class="ed-title">{{ .Title }}</h1>
+      {{ with .Description }}<p class="ed-subtitle">{{ . }}</p>{{ end }}
+    </div>
+
+    <div class="ed-animate-fade-up" style="--ed-delay: 100ms;">
+      {{ $host := site.Params.hashnodeHost }}
+      {{ $body := printf `{"query":"{ publication(host: \"%s\") { posts(first: 20) { edges { node { title brief slug publishedAt readTimeInMinutes tags { name } coverImage { url } } } } } }"}` $host }}
+      {{ $opts := dict "method" "post" "body" $body "headers" (dict "Content-Type" "application/json") }}
+      {{ with resources.GetRemote "https://gql.hashnode.com" $opts }}
+        {{ $posts := (. | transform.Unmarshal).data.publication.posts.edges }}
+        {{ if $posts }}
+          {{ range $posts }}
+            {{ $post := .node }}
+            {{ $date := time $post.publishedAt }}
+            <a href="https://{{ $host }}/{{ $post.slug }}" target="_blank" rel="noopener noreferrer" class="ed-list-item">
+              <div class="ed-list-item-title">{{ $post.title }}</div>
+              {{ with $post.brief }}<div class="ed-list-item-description">{{ . }}</div>{{ end }}
+              <div class="ed-list-item-meta">
+                <span>{{ $date.Format "Jan 2006" }}</span>
+                <span>{{ $post.readTimeInMinutes }} min read</span>
+                {{ range $post.tags }}<span>{{ .name }}</span>{{ end }}
+              </div>
+            </a>
+          {{ end }}
+        {{ else }}
+          <p style="color: var(--ed-color-text-faint);">No posts yet.</p>
+        {{ end }}
+      {{ else }}
+        <p style="color: var(--ed-color-text-faint);">Could not load posts right now.</p>
+      {{ end }}
+    </div>
+
+  </div>
+{{ end }}

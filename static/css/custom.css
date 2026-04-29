@@ -1,0 +1,264 @@
+/* Light mode overrides */
+[data-theme="light"] {
+  --ed-color-bg:            #ffffff;
+  --ed-color-surface:       #f5f5f5;
+  --ed-color-surface-hover: #ebebeb;
+  --ed-color-text:          #404040;
+  --ed-color-text-muted:    #636363;
+  --ed-color-text-faint:    #a3a3a3;
+  --ed-color-heading:       #0a0a0a;
+  --ed-color-border:        #e5e5e5;
+  --ed-color-border-hover:  #d4d4d4;
+  --ed-glass-bg:            rgba(0, 0, 0, 0.02);
+  --ed-glass-bg-hover:      rgba(0, 0, 0, 0.04);
+  --ed-glass-border:        rgba(0, 0, 0, 0.08);
+  --ed-glass-border-hover:  rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="light"] body {
+  background: var(--ed-color-bg);
+  color: var(--ed-color-text);
+}
+
+[data-theme="light"] .ed-topbar {
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom-color: var(--ed-color-border);
+}
+
+[data-theme="light"] .ed-topbar-logo,
+[data-theme="light"] .ed-topbar-link {
+  color: var(--ed-color-heading);
+}
+
+[data-theme="light"] .ed-topbar-link.active {
+  color: var(--ed-color-heading);
+}
+
+[data-theme="light"] .ed-btn-primary {
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+[data-theme="light"] .ed-btn-primary:hover {
+  background: #262626;
+}
+
+/* Theme toggle button — matches ifkash.dev */
+#theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--ed-color-border);
+  border-radius: var(--ed-radius-md);
+  color: var(--ed-color-text-muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+#theme-toggle:hover {
+  color: var(--ed-color-heading);
+  border-color: var(--ed-color-border-hover);
+  background: var(--ed-color-surface);
+}
+#theme-toggle svg { display: block; }
+
+/* Sticky footer */
+html, body { height: 100%; }
+body { display: flex; flex-direction: column; min-height: 100vh; }
+main { flex: 1; }
+
+/* Active nav link */
+.ed-topbar-link.active { color: var(--ed-white); }
+
+/* Split hero */
+.split-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 0;
+}
+
+/* Stat cards */
+.mini-stat {
+  background: var(--ed-glass-bg);
+  border: 1px solid var(--ed-glass-border);
+  border-radius: var(--ed-radius-md);
+  padding: 1rem 1.25rem;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+.mini-stat:hover {
+  background: var(--ed-glass-bg-hover);
+  border-color: var(--ed-glass-border-hover);
+}
+.mini-stat-val {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--ed-color-heading);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.mini-stat-lbl {
+  font-size: 0.6875rem;
+  color: var(--ed-color-text-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Skills pill row */
+.skills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ed-color-border);
+}
+.skill-pill {
+  font-size: 0.75rem;
+  color: var(--ed-color-text-muted);
+  background: var(--ed-glass-bg);
+  border: 1px solid var(--ed-glass-border);
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+.skill-pill:hover {
+  color: var(--ed-white);
+  border-color: var(--ed-glass-border-hover);
+}
+
+[data-theme="light"] .skill-pill:hover {
+  color: var(--ed-color-heading);
+}
+
+/* Pulsing status dot */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ed-color-success);
+  display: inline-block;
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Terminal prompt */
+.terminal-prompt {
+  font-family: 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.875rem;
+  color: var(--ed-color-success);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* "perception_engineer.init()" = 26 chars */
+.terminal-typing {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: type-out 1.6s steps(26, end) 0.4s forwards;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: var(--ed-color-success);
+  opacity: 0;
+  vertical-align: middle;
+  /* starts blinking only after typing finishes */
+  animation: blink-cursor 0.9s step-end infinite;
+  animation-delay: 2s;
+}
+
+@keyframes type-out {
+  from { width: 0; }
+  to   { width: 26ch; }
+}
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Hamburger button — hidden on desktop */
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--ed-color-border);
+  border-radius: var(--ed-radius-md);
+  color: var(--ed-color-text-muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+.menu-toggle:hover {
+  color: var(--ed-color-heading);
+  border-color: var(--ed-color-border-hover);
+  background: var(--ed-color-surface);
+}
+.menu-toggle svg { display: block; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .split-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .ed-topbar-logo { font-size: 0.875rem; }
+
+  .menu-toggle { display: flex; }
+
+  .ed-topbar { position: relative; }
+
+  #main-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.25rem 1.25rem 0.75rem;
+    background: rgba(10, 10, 10, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ed-glass-border);
+    z-index: 99;
+  }
+
+  #main-nav.open { display: flex; }
+
+  [data-theme="light"] #main-nav {
+    background: rgba(255, 255, 255, 0.97);
+    border-bottom-color: var(--ed-color-border);
+  }
+
+  #main-nav .ed-topbar-link {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--ed-color-border);
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+  }
+
+  #main-nav .ed-topbar-link:last-child {
+    border-bottom: none;
+  }
+}

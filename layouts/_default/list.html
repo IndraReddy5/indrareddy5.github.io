@@ -1,0 +1,27 @@
+{{ define "main" }}
+  <div class="ed-container" style="max-width: 860px; padding-top: 5rem; padding-bottom: 4rem;">
+
+    <div class="ed-page-header ed-animate-fade-up">
+      <h1 class="ed-title">{{ .Title }}</h1>
+      {{ with .Description }}<p class="ed-subtitle">{{ . }}</p>{{ end }}
+    </div>
+
+    <div class="ed-animate-fade-up" style="--ed-delay: 100ms;">
+      {{ range .Pages }}
+        <a href="{{ .RelPermalink }}" class="ed-list-item">
+          <div class="ed-list-item-title">{{ .Title }}</div>
+          {{ with .Description }}<div class="ed-list-item-description">{{ . }}</div>{{ end }}
+          <div class="ed-list-item-meta">
+            <span>{{ .Date.Format "Jan 2006" }}</span>
+            {{ if eq .Section "blog" }}
+              <span>{{ math.Round (div (countwords .Content) 200.0) }} min read</span>
+            {{ end }}
+          </div>
+        </a>
+      {{ else }}
+        <p class="ed-text-muted">Nothing here yet.</p>
+      {{ end }}
+    </div>
+
+  </div>
+{{ end }}

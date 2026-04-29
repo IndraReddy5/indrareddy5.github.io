@@ -1,0 +1,17 @@
+{{ $subfolder := .Get "subfolder" | default "images" }}
+{{ $caption := .Get "figCaption" | default "" }}
+{{ $cols := .Get "numCols" | default 2 }}
+{{ $page := .Page }}
+{{ $images := $page.Resources.Match (printf "%s/*" $subfolder) }}
+{{ if $images }}
+  <figure style="margin: 2rem 0;">
+    <div style="display: grid; grid-template-columns: repeat({{ $cols }}, 1fr); gap: 0.75rem;">
+      {{ range $images }}
+        <img src="{{ .RelPermalink }}" alt="{{ $caption }}" style="width: 100%; border-radius: var(--ed-radius-md); border: 1px solid var(--ed-color-border);" loading="lazy" />
+      {{ end }}
+    </div>
+    {{ with $caption }}
+      <figcaption style="text-align: center; font-size: 0.8125rem; color: var(--ed-color-text-faint); margin-top: 0.75rem;">{{ . | emojify }}</figcaption>
+    {{ end }}
+  </figure>
+{{ end }}

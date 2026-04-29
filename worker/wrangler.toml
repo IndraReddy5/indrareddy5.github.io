@@ -1,0 +1,7 @@
+name = "hashnode-webhook"
+main = "hashnode-webhook.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+GITHUB_OWNER = "indrareddy5"
+GITHUB_REPO = "indrareddy5.github.io"

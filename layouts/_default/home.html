@@ -1,0 +1,104 @@
+{{ define "main" }}
+  {{ $author := .Site.Params.author }}
+  <div class="ed-container" style="max-width: 860px; padding-top: 6rem; padding-bottom: 4rem;">
+
+    <!-- Split hero -->
+    <div class="split-hero ed-animate-fade-up">
+
+      <!-- Left: name + tagline + CTA -->
+      <div>
+        <div class="terminal-prompt">
+          <span style="color: var(--ed-color-text-faint);">~</span>
+          <span class="terminal-typing">perception_engineer.init()</span>
+          <span class="terminal-cursor"></span>
+        </div>
+        <h1 style="font-size: 2.25rem; font-weight: 800; color: var(--ed-color-heading); line-height: 1.15; margin-bottom: 1rem;">
+          {{ $author.name }}
+        </h1>
+        <p style="color: var(--ed-color-text-muted); line-height: 1.75; margin-bottom: 2rem; font-size: 0.9375rem; max-width: 420px;">
+          {{ $author.tagline }}
+        </p>
+        <a href="/documents/guvva_indrakumar_reddy.pdf" target="_blank" rel="noopener" class="ed-btn-primary">Resume ↗</a>
+      </div>
+
+      <!-- Right: stat grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; align-self: start;">
+        {{ $start := time "2023-12-01" }}
+        {{ $years := int (math.Floor (div (float (sub now.Unix $start.Unix)) 31557600.0)) }}
+        {{ $projects := len (where .Site.RegularPages "Section" "projects") }}
+        {{ $hnBody := printf `{"query":"{ publication(host: \"%s\") { posts(first: 20) { edges { node { title brief slug publishedAt readTimeInMinutes } } } } }"}` .Site.Params.hashnodeHost }}
+        {{ $hnOpts := dict "method" "post" "body" $hnBody "headers" (dict "Content-Type" "application/json") }}
+        {{ $hnPosts := slice }}
+        {{ with resources.GetRemote "https://gql.hashnode.com" $hnOpts }}
+          {{ $hnPosts = (. | transform.Unmarshal).data.publication.posts.edges }}
+        {{ end }}
+        {{ $blogs := len $hnPosts }}
+        <div class="mini-stat">
+          <div class="mini-stat-val">{{ $years }}+</div>
+          <div class="mini-stat-lbl">Years exp.</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val">{{ $projects }}</div>
+          <div class="mini-stat-lbl">Projects</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val">IIT</div>
+          <div class="mini-stat-lbl">Madras, BS</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-val">{{ $blogs }}</div>
+          <div class="mini-stat-lbl">Blog posts</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Skills strip -->
+    <div class="skills-row ed-animate-fade-up" style="--ed-delay: 100ms;">
+      <span class="skill-pill">ROS2</span>
+      <span class="skill-pill">SLAM</span>
+      <span class="skill-pill">3D Gaussian Splatting</span>
+      <span class="skill-pill">COLMAP</span>
+      <span class="skill-pill">VLA</span>
+      <span class="skill-pill">PyTorch</span>
+      <span class="skill-pill">C++</span>
+      <span class="skill-pill">LiDAR</span>
+      <span class="skill-pill">Isaac Sim</span>
+      <span class="skill-pill">Docker</span>
+    </div>
+
+    <!-- Status row -->
+    <div class="ed-animate-fade-up" style="--ed-delay: 150ms; margin-top: 3rem;">
+      <div style="display: flex; align-items: baseline; gap: 1.5rem; padding: 0.875rem 0; border-top: 1px solid var(--ed-color-border); border-bottom: 1px solid var(--ed-color-border);">
+        <span style="font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ed-color-text-faint); min-width: 90px;">Currently</span>
+        <span style="display: flex; align-items: center; gap: 0.6rem; color: var(--ed-color-text);">
+          <span class="status-dot"></span>
+          {{ $author.currently }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Latest posts from Hashnode -->
+    {{ if $hnPosts }}
+      <div class="ed-animate-fade-up" style="--ed-delay: 200ms; margin-top: 3.5rem;">
+        <p class="ed-section-label" style="margin-bottom: 1rem;">Latest</p>
+        {{ range first 3 $hnPosts }}
+          {{ $post := .node }}
+          {{ $date := time $post.publishedAt }}
+          <a href="https://{{ $.Site.Params.hashnodeHost }}/{{ $post.slug }}" target="_blank" rel="noopener noreferrer" class="ed-list-item">
+            <div class="ed-list-item-title">{{ $post.title }}</div>
+            {{ with $post.brief }}<div class="ed-list-item-description">{{ . }}</div>{{ end }}
+            <div class="ed-list-item-meta">
+              <span>{{ $date.Format "Jan 2006" }}</span>
+              <span>{{ $post.readTimeInMinutes }} min read</span>
+            </div>
+          </a>
+        {{ end }}
+        {{ if gt (len $hnPosts) 3 }}
+          <a href="/blog/" style="display: inline-block; margin-top: 1rem; font-size: 0.875rem; color: var(--ed-color-text-muted); text-decoration: none;">All posts →</a>
+        {{ end }}
+      </div>
+    {{ end }}
+
+  </div>
+{{ end }}

@@ -1,0 +1,37 @@
+baseURL = "https://indrareddy5.github.io/"
+languageCode = "en-us"
+title = "Indra Reddy"
+enableEmoji = true
+disableKinds = ["taxonomy", "term"]
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[params]
+  description = "Perception engineer at the seam of 3D vision and robot learning"
+  hashnodeHost = "indrareddy.hashnode.dev"
+
+[params.author]
+  name = "Guvva Indra Kumar Reddy"
+  tagline = "Perception engineer at the seam of 3D vision and robot learning — SLAM, Gaussian splatting, and VLA."
+  email1 = "indrakumarreddy.guvva@gmail.com"
+  email2 = "contact@indrareddy.dev"
+  currently = "SLAM Engineer @ Merai Newage"
+
+[menus]
+  [[menus.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 20
+  [[menus.main]]
+    name = "About"
+    url = "/about/"
+    weight = 30
+  [[menus.main]]
+    name = "Projects"
+    url = "/projects/"
+    weight = 40
+  [[menus.main]]
+    name = "Resume"
+    url = "/documents/guvva_indrakumar_reddy.pdf"
+    weight = 50
