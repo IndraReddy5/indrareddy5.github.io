@@ -1,0 +1,29 @@
+{{ define "main" }}
+  <div class="ed-container" style="max-width: 720px; padding-top: 5rem; padding-bottom: 4rem;">
+
+    <div class="ed-animate-fade-up">
+      <a href="/blog/" style="font-size: 0.8125rem; color: var(--ed-color-text-faint); text-decoration: none; display: inline-block; margin-bottom: 1.5rem;">← Blog</a>
+
+      {{ with .Params.coverImage }}
+        <div style="margin-bottom: 2rem; border-radius: var(--ed-radius-lg, 0.75rem); overflow: hidden;">
+          <img src="{{ . }}" alt="{{ $.Title }}" style="width: 100%; height: auto; display: block;">
+        </div>
+      {{ end }}
+
+      <h1 style="font-size: 2.25rem; font-weight: 800; color: var(--ed-color-heading); line-height: 1.15; margin-bottom: 0.75rem;">{{ .Title }}</h1>
+      {{ with .Description }}<p class="ed-subtitle" style="margin-bottom: 1.5rem;">{{ . }}</p>{{ end }}
+
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; font-size: 0.8125rem; color: var(--ed-color-text-faint); margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--ed-color-border);">
+        <span>{{ .Date.Format "January 2, 2006" }}</span>
+        <span>{{ .Params.readingTime }} min read</span>
+        {{ range .Params.tags }}<span style="padding: 0.15rem 0.5rem; background: var(--ed-color-surface); border: 1px solid var(--ed-color-border); border-radius: 999px;">{{ . }}</span>{{ end }}
+        {{ with .Params.hashnodeUrl }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer" style="margin-left: auto; color: var(--ed-color-text-faint); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">Read on Hashnode ↗</a>{{ end }}
+      </div>
+    </div>
+
+    <div class="ed-prose ed-animate-fade-up" style="--ed-delay: 100ms; overflow-x: auto;">
+      {{ .Content }}
+    </div>
+
+  </div>
+{{ end }}

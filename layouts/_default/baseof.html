@@ -65,6 +65,12 @@
     {{ block "main" . }}{{ end }}
   </main>
 
+  <button id="back-to-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
   <footer style="width: 100%; border-top: 1px solid var(--ed-color-border);">
     <div class="ed-footer" style="max-width: 860px; margin: 0 auto; padding: 1.25rem var(--ed-space-xl); border-top: none;">
       <div style="display: flex; flex-direction: column; gap: 0.25rem;">
@@ -101,6 +107,12 @@
 
     // apply correct icon on load
     setIcons(localStorage.getItem("theme") === "light");
+
+    // back-to-top: show after scrolling past 50% of viewport height
+    var btt = document.getElementById("back-to-top");
+    window.addEventListener("scroll", function () {
+      btt.classList.toggle("visible", window.scrollY > window.innerHeight * 0.5);
+    }, { passive: true });
 
     function toggleMenu() {
       var nav = document.getElementById("main-nav");

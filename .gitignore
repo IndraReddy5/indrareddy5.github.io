@@ -3,3 +3,5 @@ public/
 resources/_gen/
 .hugo_build.lock
 .DS_Store
+content/blog/*.md
+!content/blog/_index.md

@@ -16,7 +16,7 @@
           {{ range $posts }}
             {{ $post := .node }}
             {{ $date := time $post.publishedAt }}
-            <a href="https://{{ $host }}/{{ $post.slug }}" target="_blank" rel="noopener noreferrer" class="ed-list-item">
+            <a href="/blog/{{ $post.slug }}/" class="ed-list-item">
               <div class="ed-list-item-title">{{ $post.title }}</div>
               {{ with $post.brief }}<div class="ed-list-item-description">{{ . }}</div>{{ end }}
               <div class="ed-list-item-meta">
