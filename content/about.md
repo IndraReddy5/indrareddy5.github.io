@@ -7,8 +7,13 @@ I am a perception engineer working at the intersection of classical 3D vision an
 
 ## Work Experience
 
+**Engineer - Robotics Perception**
+Virya Autonomous Technologies | Aug 2026 - Present
+
+> Working on perception systems for autonomous robotic platforms, building on prior experience in SLAM, 3D reconstruction, and sensor based scene understanding. Early days here, with plenty more to share as things ramp up on front.
+
 **SLAM Engineer**  
-Merai Newage Pvt Ltd. (A Meril Group Company) | Dec 2025 – Present
+Merai Newage Pvt Ltd. (A Meril Group Company) | Dec 2025 – Aug 2026
 
 > My current work sits at the intersection of 3D scene reconstruction and embodied AI. I built an end-to-end outdoor reconstruction pipeline using 30 FPS monocular captures, COLMAP-based structure-from-motion, and 3D Gaussian Splatting with MCMC-based densification — producing scene substrates used for downstream model behaviour analysis. On the robot side, I deployed a VR-based teleoperation pipeline on the Unitree G1 humanoid using Unitree's xr-teleop package, working through dependency conflicts and network latency issues to achieve stable real-time control. I also trained a SmolVLA baseline on the LeHome dataset for cloth folding, reaching 60% / 28% task-success on train / held-out test, and built EDA pipelines and a public Gradio tool for episode inspection and joint-range analysis. Additionally, I adapted the AWS RoboMaker Hospital Gazebo world into a multi-floor simulation testbed by converting static elevator assets into dynamic, ROS-controllable models and integrating a mobile robot platform.
 
