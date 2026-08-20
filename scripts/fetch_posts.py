@@ -5,6 +5,7 @@ import json
 import os
 import re
 import sys
+from urllib import error as urllib_error
 from urllib import request as urllib_request
 
 HASHNODE_HOST = os.environ.get("HASHNODE_HOST", "indrareddy.hashnode.dev")
@@ -38,13 +39,21 @@ def fetch_posts(host):
     req = urllib_request.Request(
         "https://gql.hashnode.com",
         data=data,
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "indrareddy5.github.io-fetch-posts/1.0",
+        },
     )
-    with urllib_request.urlopen(req, timeout=30) as resp:
-        result = json.loads(resp.read())
+    try:
+        with urllib_request.urlopen(req, timeout=30) as resp:
+            result = json.loads(resp.read())
+    except (urllib_error.HTTPError, urllib_error.URLError, TimeoutError) as exc:
+        print(f"Warning: failed to fetch posts from Hashnode: {exc}", file=sys.stderr)
+        return None
     if "errors" in result:
-        print("GraphQL errors:", result["errors"], file=sys.stderr)
-        sys.exit(1)
+        print(f"Warning: GraphQL errors: {result['errors']}", file=sys.stderr)
+        return None
     return result["data"]["publication"]["posts"]["edges"]
 
 
@@ -90,13 +99,16 @@ def write_post(post):
 def main():
     os.makedirs(CONTENT_DIR, exist_ok=True)
 
+    print(f"Fetching posts from {HASHNODE_HOST}…")
+    edges = fetch_posts(HASHNODE_HOST)
+    if edges is None:
+        print("Skipping post refresh and keeping existing blog content.")
+        return
+
     # Remove previously generated post files (keep _index.md)
     for fname in os.listdir(CONTENT_DIR):
         if fname.endswith(".md") and fname != "_index.md":
             os.remove(os.path.join(CONTENT_DIR, fname))
-
-    print(f"Fetching posts from {HASHNODE_HOST}…")
-    edges = fetch_posts(HASHNODE_HOST)
 
     for edge in edges:
         path = write_post(edge["node"])
