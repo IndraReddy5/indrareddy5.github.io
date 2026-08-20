@@ -15,8 +15,8 @@ disableKinds = ["taxonomy", "term"]
   name = "Guvva Indra Kumar Reddy"
   tagline = "Perception engineer at the seam of 3D vision and robot learning — SLAM, Gaussian splatting, and VLA."
   email1 = "indrakumarreddy.guvva@gmail.com"
-  email2 = "contact@indrareddy.dev"
-  currently = "SLAM Engineer @ Merai Newage"
+  # email2 = "contact@indrareddy.dev"
+  currently = "Engineer - Robotics [Perception] @ Virya Autonomous Technologies"
 
 [menus]
   [[menus.main]]
