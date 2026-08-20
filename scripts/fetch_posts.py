@@ -48,7 +48,12 @@ def fetch_posts(host):
     try:
         with urllib_request.urlopen(req, timeout=30) as resp:
             result = json.loads(resp.read())
-    except (urllib_error.HTTPError, urllib_error.URLError, TimeoutError) as exc:
+    except (
+        urllib_error.HTTPError,
+        urllib_error.URLError,
+        TimeoutError,
+        json.JSONDecodeError,
+    ) as exc:
         print(f"Warning: failed to fetch posts from Hashnode: {exc}", file=sys.stderr)
         return None
     if "errors" in result:
