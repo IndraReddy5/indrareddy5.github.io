@@ -21,7 +21,7 @@ disableKinds = ["taxonomy", "term"]
 [menus]
   [[menus.main]]
     name = "Blog"
-    url = "/blog/"
+    url = "https://indrareddy.hashnode.dev/"
     weight = 20
   [[menus.main]]
     name = "About"
